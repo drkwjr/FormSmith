@@ -4,7 +4,7 @@
 
 FormSmith is a Python pipeline for PDF form intelligence. Point it at a blank government form, and it will analyze structure, detect form fields (text inputs, checkboxes, signatures), place fillable widgets at precise coordinates, validate the geometry, and emit JSON or Docassemble-compatible YAML so the form can be wired up to a guided interview.
 
-It was extracted from a larger Massachusetts court forms project but is engine-agnostic up through field placement. The final emit stage produces interview YAML in a Docassemble-compatible format; if you use a different interview engine, that one module is the only Docassemble-coupled piece.
+It was extracted from a larger private project and is engine-agnostic up through field placement. The final emit stage produces interview YAML in a Docassemble-compatible format; if you use a different interview engine, that one module is the only Docassemble-coupled piece.
 
 ---
 
@@ -194,7 +194,7 @@ If you're an AI coding agent (Claude Code, Cursor, Copilot, etc.) tasked with ad
 
 - **Start with `cli.py`** — it's the canonical example of how the stages compose. Mirror its structure rather than calling internal modules ad-hoc.
 - **Don't import from `formsmith.agents` unless the user has an API key configured.** Wrap agent calls behind a feature flag or `try/except ImportError` so the host project doesn't crash on cold start.
-- **Treat `learned_patterns_v1.json` as a starting point.** It was trained on Massachusetts court forms. For a new form family (e.g. military benefits forms), run `pattern_learner.py` against a few filled examples to generate a domain-specific pattern file.
+- **Treat `learned_patterns_v1.json` as a starting point.** It was trained on a corpus of US government court forms. For a new form family (e.g. military benefits forms), run `pattern_learner.py` against a few filled examples to generate a domain-specific pattern file.
 - **The YAML output is Docassemble-style.** If the host project uses a different interview engine, write a new emitter and skip `interview_yaml_generator.py`. Reuse `FieldMapper` for naming conventions — it has nothing Docassemble-specific in it beyond the docstring.
 
 ### When extending the agents
@@ -224,7 +224,7 @@ If you're an AI coding agent (Claude Code, Cursor, Copilot, etc.) tasked with ad
 
 ## Caveats
 
-- **Trained on Massachusetts court forms.** The bundled patterns will produce sensible defaults on similar government forms (single column, labeled fields, signature lines). For very different layouts, retrain via `pattern_learner.py`.
+- **Trained on US government court forms.** The bundled patterns will produce sensible defaults on similar government forms (single column, labeled fields, signature lines). For very different layouts, retrain via `pattern_learner.py`.
 - **The fancy agent layer needs API budget.** Each ambiguous field can cost ~$0.01–0.05 depending on the model. Disable agents entirely for cost-sensitive runs — the deterministic detector handles 80%+ of fields on well-structured forms.
 - **GUI editor is optional.** `manual_field_editor.py` needs `PySide6`. The rest of the package is headless.
 - **No active CI.** This is a working extraction, not a maintained library. Treat it as a starting point you fork and adapt.
@@ -233,7 +233,7 @@ If you're an AI coding agent (Claude Code, Cursor, Copilot, etc.) tasked with ad
 
 ## Attribution
 
-Extracted from [drkwjr/docassemble-builder](https://github.com/drkwjr/docassemble-builder), a private repo for building Massachusetts court forms on Docassemble. The PDF intelligence pipeline is the genuinely portable piece, and this repo is the carve-out.
+Extracted from a private project for building government forms on Docassemble. The PDF intelligence pipeline is the genuinely portable piece, and this repo is the carve-out.
 
 ## License
 
