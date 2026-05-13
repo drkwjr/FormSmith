@@ -1,0 +1,33 @@
+# Core PDF manipulation
+pikepdf>=8.0
+PyMuPDF>=1.23           # imported as `fitz`
+pdfminer.six>=20221105
+Pillow>=10.0
+
+# Numerics + data
+numpy>=1.24
+pydantic>=2.0
+
+# Computer vision (used by learned_field_detector and the visual placer)
+opencv-python>=4.8
+
+# YAML output for interview engines (e.g. Docassemble)
+PyYAML>=6.0
+
+# Env / config
+python-dotenv>=1.0
+
+# --- Optional: vision-agent stage (formsmith/agents) ---
+# Install whichever provider(s) you want; you only need one.
+#
+# OpenAI (default — agents currently hit gpt-4o/gpt-5-mini class models)
+openai>=1.40
+#
+# Anthropic (Claude 3.5 Sonnet / Opus / Haiku all support vision)
+# anthropic>=0.40
+#
+# Google (Gemini 1.5+ supports vision)
+# google-generativeai>=0.7
+
+# --- Optional: GUI manual field editor ---
+# PySide6>=6.6
